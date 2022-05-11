@@ -6,11 +6,15 @@
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/drawable/ic_all_news.xml" value="0.214" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/drawable/ic_breaking_news.xml" value="0.214" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/drawable/ic_favorite.xml" value="0.214" />
+        <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/activity_auth.xml" value="0.2234375" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/activity_main.xml" value="0.2234375" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/fragment_article.xml" value="0.2234375" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/fragment_breaking_news.xml" value="0.2234375" />
+        <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/fragment_login.xml" value="0.2234375" />
+        <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/fragment_register.xml" value="0.2234375" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/fragment_saved_news.xml" value="0.2234375" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/layout/item_article_preview.xml" value="0.2234375" />
+        <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/menu/action_bar_menu.xml" value="0.2234375" />
         <entry key="..\:/Projects/Internship/NewsApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2234375" />
       </map>
     </option>
