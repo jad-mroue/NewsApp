@@ -47,6 +47,16 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>(){
             setOnClickListener {
                 onItemClickListener?.let { it(article) }
             }
+//            saveButton.setOnClickListener{
+//                var allSavedNewsLiveData = viewModel.getSavedNews()
+//                var allSavedNews = allSavedNewsLiveData.value
+//                if(allSavedNews?.contains(article) == true){
+//                    viewModel.deleteArticle(article)
+//                }
+//                else{
+//                    viewModel.saveArticle(article)
+//                }
+//            }
         }
     }
 

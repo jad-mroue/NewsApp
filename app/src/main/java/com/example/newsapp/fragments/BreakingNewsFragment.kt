@@ -1,7 +1,6 @@
 package com.example.newsapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import androidx.fragment.app.Fragment
@@ -16,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.util.Resource
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.item_article_preview.*
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
@@ -37,7 +38,9 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 bundle
             )
         }
+        saveButton.setOnClickListener {
 
+        }
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer{ response ->
             when(response){
                 is Resource.Success -> {
@@ -55,7 +58,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Log.e(TAG, "An error occurred: $message")
+                        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
                     }
                 }
                 is Resource.Loading -> {
@@ -63,6 +66,20 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 }
             }
         })
+
+    }
+
+    fun floatingActionButton(){
+        var position = newsAdapter.itemCount
+        var article = newsAdapter.differ.currentList[position]
+        var allSavedNewsLiveData = viewModel.getSavedNews()
+        var allSavedNews = allSavedNewsLiveData.value
+        if(allSavedNews?.contains(article) == true){
+            viewModel.deleteArticle(article)
+        }
+        else{
+            viewModel.saveArticle(article)
+        }
     }
     private fun hideProgressBar(){
         paginationProgressBar.visibility = View.INVISIBLE

@@ -8,6 +8,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.newsapp.NewsActivity
 import com.example.newsapp.R
 import com.example.newsapp.viewmodels.NewsViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlin.reflect.KProperty
 
@@ -25,9 +27,12 @@ class ArticleFragment : Fragment(R.layout.fragment_article){
             webViewClient = WebViewClient()
             article.url?.let { loadUrl(it) }
         }
+        fab.setOnClickListener {
+            viewModel.saveArticle(article)
+            Snackbar.make(view, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
+        }
     }
 }
-
 private operator fun Any.setValue(articleFragment: ArticleFragment, property: KProperty<*>, articleFragmentArgs: ArticleFragmentArgs) {
 
 }

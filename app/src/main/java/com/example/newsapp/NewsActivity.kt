@@ -39,17 +39,13 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onStart() {
         auth = FirebaseAuth.getInstance()
-        var toast = Toast.makeText(this, "neither", Toast.LENGTH_LONG)
         if(auth.currentUser == null){
-            toast = Toast.makeText(this, "null", Toast.LENGTH_LONG)
             setContentView(R.layout.activity_auth)
         }
         else{
-            toast = Toast.makeText(this, "not null", Toast.LENGTH_LONG)
             setContentView(R.layout.activity_main)
             bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
         }
-        toast.show();
         super.onStart()
     }
 
@@ -60,4 +56,5 @@ class NewsActivity : AppCompatActivity() {
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
     }
+
 }
