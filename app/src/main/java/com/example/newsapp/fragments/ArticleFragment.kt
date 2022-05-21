@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.newsapp.NewsActivity
 import com.example.newsapp.R
@@ -28,7 +29,9 @@ class ArticleFragment : Fragment(R.layout.fragment_article){
             article.url?.let { loadUrl(it) }
         }
         fab.setOnClickListener {
-            viewModel.saveArticle(article)
+            var myArticle = article
+            myArticle.userId = viewModel.auth.uid
+            viewModel.saveArticle(myArticle)
             Snackbar.make(view, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
         }
     }

@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.models.Article
+import com.example.newsapp.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>(){
+class NewsAdapter(private val saveListener: SaveListener) : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>(){
     inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-
+    interface SaveListener{
+        fun onClick(position: Int)
+    }
     private val differCallback = object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
@@ -47,16 +50,9 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>(){
             setOnClickListener {
                 onItemClickListener?.let { it(article) }
             }
-//            saveButton.setOnClickListener{
-//                var allSavedNewsLiveData = viewModel.getSavedNews()
-//                var allSavedNews = allSavedNewsLiveData.value
-//                if(allSavedNews?.contains(article) == true){
-//                    viewModel.deleteArticle(article)
-//                }
-//                else{
-//                    viewModel.saveArticle(article)
-//                }
-//            }
+            saveButton.setOnClickListener{
+                saveListener.onClick(position)
+            }
         }
     }
 

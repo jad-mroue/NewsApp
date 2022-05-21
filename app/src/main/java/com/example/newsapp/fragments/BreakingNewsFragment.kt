@@ -1,6 +1,7 @@
 package com.example.newsapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import androidx.fragment.app.Fragment
@@ -38,9 +39,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 bundle
             )
         }
-        saveButton.setOnClickListener {
-
-        }
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer{ response ->
             when(response){
                 is Resource.Success -> {
@@ -67,19 +65,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             }
         })
 
-    }
-
-    fun floatingActionButton(){
-        var position = newsAdapter.itemCount
-        var article = newsAdapter.differ.currentList[position]
-        var allSavedNewsLiveData = viewModel.getSavedNews()
-        var allSavedNews = allSavedNewsLiveData.value
-        if(allSavedNews?.contains(article) == true){
-            viewModel.deleteArticle(article)
-        }
-        else{
-            viewModel.saveArticle(article)
-        }
     }
     private fun hideProgressBar(){
         paginationProgressBar.visibility = View.INVISIBLE
@@ -123,7 +108,31 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         }
     }
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(object : NewsAdapter.SaveListener{
+            override fun onClick(position: Int) {
+                var article = newsAdapter.differ.currentList[position]
+                article.url?.let {
+                    val check = viewModel.checkArticleIfSaved(article.url!!)
+                    if(check != null){
+                        Log.d("CHECK", check.toString())
+                        viewModel.deleteArticle(article)
+                        view?.let {
+                            Snackbar.make(it, "Successfully deleted article", Snackbar.LENGTH_LONG).apply{
+                                setAction("Undo"){
+                                    viewModel.saveArticle(article)
+                                }
+                                show()
+                            }
+                        }
+                    }
+                    else{
+                        Log.d("ELSE", article.url.toString())
+                        viewModel.saveArticle(article)
+                        view?.let { Snackbar.make(it, "Article saved successfully", Snackbar.LENGTH_SHORT).show() }
+                    }
+                }
+            }
+        })
         rvBreakingNews.apply{
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
